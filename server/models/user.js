@@ -77,6 +77,68 @@ const users = [
         referralUid: '',
         saleUid: 'yoo',
     },
+    {
+        userId: "sunam",
+        name: "김수남",
+        password: "$2a$11$Mc0z64P0l.zNS0idsZgGyegR2EIHFcAynjE8OUnSQq3QggU2qrwsa",
+        phone: {
+            country: '+82',
+            number: '01012341235',
+        },
+        userFg: '1',
+        referralCode: 'fe4ea9a5098579e4b483',
+        referralUid: 'yoo',
+        saleUid: 'yoo',
+    },
+    {
+        userId: "subok",
+        name: "김수복",
+        password: "$2a$11$Mc0z64P0l.zNS0idsZgGyegR2EIHFcAynjE8OUnSQq3QggU2qrwsa",
+        phone: {
+            country: '+82',
+            number: '01012341235',
+        },
+        userFg: '1',
+        referralCode: '8a84df794d96ebaa6cb8',
+        referralUid: 'sunam',
+        saleUid: 'yoo',
+    },
+    {
+        userId: "sumi",
+        name: "김수미",
+        password: "$2a$11$Mc0z64P0l.zNS0idsZgGyegR2EIHFcAynjE8OUnSQq3QggU2qrwsa",
+        phone: {
+            country: '+82',
+            number: '01012344232',
+        },
+        userFg: '1',
+        referralCode: '2f8729648ddfbbb4179e',
+        referralUid: 'sunam',
+        saleUid: 'yoo',
+    },
+];
+
+const assets = [
+    {
+        userId: "fildata",
+        name: "개발자 계정",
+        totalAmount: 13200,
+        totalStakeAmount: 10000,
+        totalRewardAmount: 2500,
+        totalCommissionAmount: 700,
+        stakings: [
+            {
+                seq: 1,
+                contractDt: '2024-01-01',
+                sDt: '2024-01-02',
+                eDt: '2025-06-25',
+                duration: 540,
+                elapsed: 23,
+                amt: 10000,
+                rewardAmt: 2500,
+            },
+        ]
+    },
 ];
   
 const getUsers = async () => {
@@ -101,7 +163,11 @@ const getUserByReferralCode = async (referralCode) => {
     return Promise.resolve(foundUser || null);
 };
 
-getUserByReferralCode
+const getAssetsById = async (userId) => {
+    const foundAssets = assets.find(u => u.userId === userId);
+    return Promise.resolve(foundAssets || null);
+};
+
 
 const createUser = async (user) => {
     users.push({
@@ -115,6 +181,7 @@ const createUser = async (user) => {
         userFg: '1',
         referralCode: user.referralCode,
         referralUid: user.referralUid,
+        saleUid: user.saleUid,
     });
 
     const newUser = users.find(u => u.userId === user.userId);
@@ -145,4 +212,4 @@ const updateUserPassword = async (userId, password) => {
     return userToUpdate;
 };
 
-export { getUsers, getUserById, getUserByPhone, getUserByReferralCode, createUser, updateUserName, updateUserPassword }
+export { getUsers, getUserById, getUserByPhone, getUserByReferralCode, getAssetsById, createUser, updateUserName, updateUserPassword }

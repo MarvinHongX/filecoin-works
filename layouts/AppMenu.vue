@@ -8,6 +8,11 @@ const model = ref([
         items: [
             { label: '홈', icon: 'pi pi-fw pi-home', to: '/' },
             {
+                label: '자산',
+                icon: 'pi pi-fw pi-dollar',
+                to: '/assets',
+            },
+            {
                 label: '회원 관리',
                 icon: 'pi pi-fw pi-id-card',
                 to: '/users',

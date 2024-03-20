@@ -226,6 +226,15 @@ const onCancelPasswordClick = () => {
                                     <Button disabled class="p-button-text"></Button>
                                 </div>
                             </li>
+                            <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"> 
+                                <div class="text-500 w-6 md:w-2 font-medium">에이전시 아이디</div>
+                                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                                    {{ authUser?.saleUid || "-" }}
+                                </div>
+                                <div class="w-6 md:w-2 flex justify-content-end">
+                                    <Button disabled class="p-button-text"></Button>
+                                </div>
+                            </li>
                             <li class="flex align-items-center py-3 px-2 border-top-1 border-bottom-1 surface-border flex-wrap">    
                                 <div class="text-500 w-6 md:w-2 font-medium">회원등급</div>
                                 <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">

@@ -1,4 +1,4 @@
-import { getUserById, getUserByPhone, getUserByReferralCode, createUser, getUsers, updateUserName, updateUserPassword } from "@/server/models/user";
+import { getUserById, getUserByPhone, getUserByReferralCode, getAssetsById, createUser, getUsers, updateUserName, updateUserPassword } from "@/server/models/user";
 import { hashPassword, verifyPassword } from "@/server/utils/password";
 import { createAgreeToken, verifyAgreeToken, verifyToken } from "@/server/utils/session"
 import { createReferralCode, verifyReferralCode } from "@/server/utils/referral";
@@ -42,7 +42,8 @@ const signUpAgreed = async (token) => {
 
     const referralUser = await getUserByReferralCode(agree.referralCode);
 
-    if (!referralUser || referralUser.userId === '') return null;
+    if (!referralUser || !referralUser.userId || referralUser.userId === '') return null;
+    if (!referralUser || !referralUser.saleUid || referralUser.saleUid === '') return null;
     
     return {
         agrees: agree.agrees,
@@ -180,6 +181,24 @@ const allUsers = async (event) => {
     return await getUsers();
 };
 
+const userAssets = async (event) => {
+    const config = useRuntimeConfig();
+    const cookie = getCookie(event, config.session);
+    if (!cookie) {
+        return null;
+    }
+    const token = await verifyToken(cookie);
+    if (!token) {
+        return null; 
+    }
+    const assets = await getAssetsById(token.userId);
+    if (!assets) {
+        return null;
+    }
+    return assets;
+};
+
+
 const updateName = async (userId, name) => {
     if (!userId || userId == '') return null;
     if (!name || name == '') return null;
@@ -212,4 +231,4 @@ const updatePassword = async (userId, body) => {
     return { userId, name, userFg, phone, referralCode, referralUid, saleUid };
 };
 
-export { signUpReferralCodeVerified, signUpAgree, signUpAgreed, signUpUser, signInUser, existUser, helpUser, helpCodeUser, getTokenUser, allUsers, updateName, updatePassword }
+export { signUpReferralCodeVerified, signUpAgree, signUpAgreed, signUpUser, signInUser, existUser, helpUser, helpCodeUser, getTokenUser, allUsers, userAssets, updateName, updatePassword }
